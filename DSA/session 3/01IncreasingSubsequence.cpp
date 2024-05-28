@@ -14,7 +14,6 @@ void findIncreasingSubsequences(int t, vector<long long> &cases)
             continue;
         }
 
-        // Find the position of the most significant bit
         int msb_pos = 63 - __builtin_clzll(X - 1);
         vector<long long> array(msb_pos + 1, 1);
 
