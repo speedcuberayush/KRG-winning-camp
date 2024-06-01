@@ -3,172 +3,198 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Phone Directory App</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
-      rel="stylesheet"
-    />
+    <title>Document</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
+        align-items: center;
+        background-color: #000;
         display: flex;
         justify-content: center;
-        align-items: center;
         height: 100vh;
-        background-color: #f4f4f4;
-        margin: 0;
-        font-size: 1.4rem;
-        font-family: "Bebas Neue", sans-serif;
       }
 
-      .container {
-        background: #fff;
+      .form {
+        background-color: #15172b;
+        border-radius: 20px;
+        box-sizing: border-box;
+        height: 500px;
         padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        width: 700px;
+        width: 520px;
       }
 
-      h1 {
-        text-align: center;
-        margin-bottom: 20px;
+      .title {
+        color: #eee;
+        font-family: sans-serif;
+        font-size: 36px;
+        font-weight: 600;
+        margin-top: 30px;
       }
 
-      .form-container {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        gap: 10px;
+      .subtitle {
+        color: #eee;
+        font-family: sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        margin-top: 10px;
       }
 
-      .form-container input {
-        width: 45%;
-        padding: 15px;
-        border: 1px solid #ccc;
-        /* border-radius: 4px; */
-        text-align: center;
-        font-size: 1.1em;
-      }
-
-      .form-container button {
-        width: 60%;
-        padding: 0.55em;
-        /* height: 7em; */
-        background: #28a745;
-        color: #fff;
-        border: none;
-        font-size: 1.2em;
-
-        border-radius: 5em;
-        cursor: pointer;
-      }
-      input {
-        height: 30%;
-        font-family: "Bebas Neue", sans-serif;
-        border-radius: 5em;
-      }
-
-      .form-container button:hover {
-        background: #0096ff;
-      }
-
-      #contactList {
-        list-style-type: none;
-        padding: 0;
-      }
-
-      #contactList li {
-        height: 3.5em;
-        background: #f9f9f9;
-        padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-        border-radius: 1em;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-      }
-
-      #contactList li button {
-        background: #dc3545;
-        width: 200px;
-        height: 5em;
-        border-radius: 5em;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-      }
-
-      #contactList li button:hover {
-        background: #c82333;
-      }
-      .for-input-hu-main {
+      .input-container {
+        height: 50px;
+        position: relative;
         width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 5em;
+      }
+
+      .ic1 {
+        margin-top: 40px;
+      }
+
+      .ic2 {
+        margin-top: 30px;
+      }
+
+      .input {
+        background-color: #303245;
+        border-radius: 12px;
+        border: 0;
+        box-sizing: border-box;
+        color: #eee;
+        font-size: 18px;
+        height: 100%;
+        outline: 0;
+        padding: 4px 20px 0;
+        width: 100%;
+      }
+
+      .cut {
+        background-color: #15172b;
+        border-radius: 10px;
+        height: 20px;
+        left: 20px;
+        position: absolute;
+        top: -20px;
+        transform: translateY(0);
+        transition: transform 200ms;
+        width: 76px;
+      }
+
+      .cut-short {
+        width: 50px;
+      }
+
+      .input:focus ~ .cut,
+      .input:not(:placeholder-shown) ~ .cut {
+        transform: translateY(8px);
+      }
+
+      .placeholder {
+        color: #65657b;
+        font-family: sans-serif;
+        left: 20px;
+        line-height: 14px;
+        pointer-events: none;
+        position: absolute;
+        transform-origin: 0 50%;
+        transition: transform 200ms, color 200ms;
+        top: 20px;
+      }
+
+      .input:focus ~ .placeholder,
+      .input:not(:placeholder-shown) ~ .placeholder {
+        transform: translateY(-30px) translateX(10px) scale(0.75);
+      }
+
+      .input:not(:placeholder-shown) ~ .placeholder {
+        color: #808097;
+      }
+
+      .input:focus ~ .placeholder {
+        color: #dc2f55;
+      }
+
+      .submit {
+        background-color: #08d;
+        border-radius: 12px;
+        border: 0;
+        box-sizing: border-box;
+        color: #eee;
+        cursor: pointer;
+        font-size: 18px;
+        height: 50px;
+        margin-top: 38px;
+        text-align: center;
+        width: 100%;
+      }
+
+      .submit:active {
+        background-color: #06b;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>Phone Directory</h1>
-      <div class="form-container">
-        <div class="for-input-hu-main">
-          <input type="text" id="name" placeholder="Name" />
-          <input type="text" id="phone" placeholder="Phone" />
-        </div>
-        <button onclick="addContact()">Add Contact</button>
+    <div class="form">
+      <div class="title">Welcome</div>
+      <div class="subtitle">Let's create your account!</div>
+      <div class="input-container ic1">
+        <input id="firstname" class="input" type="text" placeholder=" " />
+        <div class="cut"></div>
+        <label for="firstname" class="placeholder">First name</label>
       </div>
-      <ul id="contactList"></ul>
+      <div class="input-container ic2">
+        <input id="password" class="input" type="password" placeholder=" " />
+        <div class="cut"></div>
+        <label for="password" class="placeholder">Password</label>
+      </div>
+      <div class="input-container ic2">
+        <input id="email" class="input" type="text" placeholder=" " />
+        <div class="cut cut-short"></div>
+        <label for="email" class="placeholder">Email</label>
+      </div>
+      <button type="button" class="submit" onclick="validateForm()">
+        Submit
+      </button>
     </div>
+
     <script>
-      const contacts = [
-        { name: "SOMU", phone: "9724132257" },
-        { name: "PAPA", phone: "9958486072" },
-        { name: "MOM", phone: "7041947089" },
-        { name: "BHAIYA", phone: "8750355787" },
-      ];
+      function validateForm() {
+        let firstname = document.getElementById("firstname").value;
+        let password = document.getElementById("password").value;
+        let email = document.getElementById("email").value;
 
-      document.addEventListener("DOMContentLoaded", () => {
-        renderContacts();
-      });
-
-      function renderContacts() {
-        const contactList = document.getElementById("contactList");
-        contactList.innerHTML = "";
-
-        contacts.forEach((contact, index) => {
-          const li = document.createElement("li");
-          li.innerHTML = `${contact.name} - ${contact.phone} <button onclick="removeContact(${index})">Remove</button>`;
-          contactList.appendChild(li);
-        });
-      }
-
-      function addContact() {
-        const name = document.getElementById("name").value;
-        const phone = document.getElementById("phone").value;
-
-        if (name && phone) {
-          contacts.push({ name, phone });
-          document.getElementById("name").value = "";
-          document.getElementById("phone").value = "";
-          renderContacts();
-        } else {
-          alert("Please enter both name and phone number.");
+        if (firstname === "" || password === "" || email === "") {
+          alert("All fields are required.");
+          return false;
         }
+
+        if (!validateEmail(email)) {
+          alert("Please enter a valid email address.");
+          return false;
+        }
+
+        if (!validatePassword(password)) {
+          alert(
+            "Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number."
+          );
+          return false;
+        }
+
+        let userDetails = {
+          firstname: firstname,
+          password: password,
+          email: email,
+        };
+
+        localStorage.setItem("userDetails", JSON.stringify(userDetails));
+        window.location.href = "thankyou.html";
       }
 
-      function removeContact(index) {
-        contacts.splice(index, 1);
-        renderContacts();
+      function validateEmail(email) {
+        let re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return re.test(email);
+      }
+
+      function validatePassword(password) {
+        let re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        return re.test(password);
       }
     </script>
   </body>

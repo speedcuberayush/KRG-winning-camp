@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thank You</title>
+  </head>
+  <body>
+    <div class="thank-you-message">
+      <h1>Thank You!</h1>
+      <p>Your account has been created successfully.</p>
+      <div class="user-details">
+        <p id="user-firstname"></p>
+        <p id="user-lastname"></p>
+        <p id="user-email"></p>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", (event) => {
+        var userDetails = JSON.parse(localStorage.getItem("userDetails"));
+
+        if (userDetails) {
+          document.getElementById("user-firstname").textContent =
+            "First Name: " + userDetails.firstname;
+          document.getElementById("user-lastname").textContent =
+            "Last Name: " + userDetails.lastname;
+          document.getElementById("user-email").textContent =
+            "Email: " + userDetails.email;
+        } else {
+          document.querySelector(".thank-you-message").innerHTML =
+            "<p>Invalid details or session expired.</p>";
+        }
+      });
+    </script>
+  </body>
+</html>
