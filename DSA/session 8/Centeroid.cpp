@@ -1,16 +1,15 @@
 #include <bits/stdc++.h>
 
 using namespace std;
-int N, a, b, p[1000], sz[1000];
-vector<int> G[1000];
+const int maxN = 2e5+5;
 
-void dfs(int u = 1)
-{
+int N, a, b, p[maxN], sz[maxN];
+vector<int> G[maxN];
+
+void dfs(int u = 1){
     sz[u] = 1;
-    for (int v : G[u])
-    {
-        if (v != p[u])
-        {
+    for(int v : G[u]){
+        if(v != p[u]){
             p[v] = u;
             dfs(v);
             sz[u] += sz[v];
@@ -18,33 +17,28 @@ void dfs(int u = 1)
     }
 }
 
-int main()
-{
-    int N;
-    cin >> N;
-    for (int i = 0; i < N - 1; i++)
-    {
-        int a, b;
-        cin >> a >> b;
+int main(){
+    scanf("%d", &N);
+    for(int i = 0; i < N-1; i++){
+        scanf("%d %d", &a, &b);
         G[a].push_back(b);
         G[b].push_back(a);
     }
 
     dfs();
 
-    for (int i = 1; i <= N; i++)
-    {
+    for(int i = 1; i <= N; i++){
         bool centroid = true;
-        if (p[i] != 0 && N - sz[i] > N / 2)
+
+        if(p[i] != 0 && N-sz[i] > N/2)
             centroid = false;
 
-        for (int v : G[i])
-            if (v != p[i] && sz[v] > N / 2)
+        for(int v : G[i])
+            if(v != p[i] && sz[v] > N/2)
                 centroid = false;
 
-        if (centroid)
-        {
-            cout << i << endl;
+        if(centroid){
+            printf("%d\n", i);
             return 0;
         }
     }
