@@ -1,44 +1,34 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 using namespace std;
 
-bool isSubsequence(const string &s, const string &password)
+bool solve(string s, string l, string r, int m)
 {
-    int pos = 0;
-    for (char c : s)
+    string password = "";
+    for (int i = 0; i < m; ++i)
     {
-        if (c == password[pos])
-            pos++;
-        if (pos == password.size())
-            return true;
-    }
-    return false;
-}
+        char largest_digit = r[i];
+        for (char digit = r[i]; digit >= l[i]; --digit)
+        {
+            if (s.find(digit, 0) == string::npos)
+            {
+                largest_digit = digit;
+                break;
+            }
+        }
 
-void generatePasswords(const string &s, const string &l, const string &r, string &currentPassword, int position, bool &found)
-{
-    if (found)
-        return;
+        if (largest_digit == l[i] - 1)
+            return false;
 
-    if (position == l.size())
-    {
-        if (!isSubsequence(s, currentPassword))
-            found = true;
-        return;
+        password += largest_digit;
     }
-
-    for (char digit = l[position]; digit <= r[position]; ++digit)
-    {
-        currentPassword.push_back(digit);
-        generatePasswords(s, l, r, currentPassword, position + 1, found);
-        currentPassword.pop_back();
-    }
+    return true;
 }
 
 int main()
 {
-
     int t;
     cin >> t;
     while (t--)
@@ -50,12 +40,10 @@ int main()
         string l, r;
         cin >> l >> r;
 
-        bool found = false;
-        string currentPassword = "";
-        generatePasswords(s, l, r, currentPassword, 0, found);
-
-        cout << ((found) ? "YES" : "NO") << endl;
+        if (solve(s, l, r, m))
+            cout << "YES" << endl;
+        else
+            cout << "NO" << endl;
     }
-
     return 0;
 }

@@ -1,0 +1,7 @@
+F.txt executing line 1
+F.txt executing line 2
+F.txt executing line 3
+F.txt executing line 4
+$$$$$$ F.txt IO operation
+F.txt executing line 5
+F.txt executing line 6

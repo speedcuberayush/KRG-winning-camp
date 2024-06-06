@@ -1,0 +1,6 @@
+B.txt executing line 1
+B.txt executing line 2
+B.txt executing line 3
+$$$$$$ B.txt IO operation
+B.txt executing line 4
+B.txt executing line 5

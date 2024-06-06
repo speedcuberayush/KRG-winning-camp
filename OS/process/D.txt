@@ -1,0 +1,7 @@
+D.txt executing line 1
+D.txt executing line 2
+D.txt executing line 3
+D.txt executing line 4
+$$$$$$ D.txt IO operation
+D.txt executing line 5
+D.txt executing line 6

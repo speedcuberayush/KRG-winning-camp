@@ -1,0 +1,7 @@
+E.txt executing line 1
+E.txt executing line 2
+E.txt executing line 3
+E.txt executing line 4
+$$$$$$ E.txt IO operation
+E.txt executing line 5
+E.txt executing line 6

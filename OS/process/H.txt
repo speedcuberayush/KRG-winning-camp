@@ -1,0 +1,7 @@
+H.txt executing line 1
+H.txt executing line 2
+H.txt executing line 3
+H.txt executing line 4
+H.txt executing line 5
+$$$$$$ H.txt IO operation
+H.txt executing line 6

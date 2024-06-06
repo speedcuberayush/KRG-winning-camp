@@ -1,0 +1,6 @@
+C.txt executing line 1
+$$$$$$ C.txt IO operation
+C.txt executing line 2
+C.txt executing line 3
+C.txt executing line 4
+C.txt executing line 5

@@ -1,0 +1,7 @@
+G.txt executing line 1
+G.txt executing line 2
+G.txt executing line 3
+G.txt executing line 4
+$$$$$$ G.txt IO operation
+G.txt executing line 5
+G.txt executing line 6

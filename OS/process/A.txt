@@ -1,0 +1,5 @@
+A.txt executing line 1
+A.txt executing line 2
+$$$$$$ A.txt IO operation
+A.txt executing line 3
+A.txt executing line 4
