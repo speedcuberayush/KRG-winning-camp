@@ -11,20 +11,43 @@ exec sp_rename 'newdatabase', 'tempdatabase';
 */
 
 --ALTER TABLE COMMANDS
---add column
---drop column
---modify column
---rename column
---add and remove constraint
+/*
+-- Create the student2 table
+CREATE TABLE student2 (
+    student_id INT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    date_of_birth DATE,
+    grade_level INT
+);
 
+-- Add a new column
+ALTER TABLE student2
+ADD email VARCHAR(100);
 
+-- Drop an existing column
+ALTER TABLE student2
+DROP COLUMN grade_level;
 
+-- Modify an existing column
+ALTER TABLE student2
+MODIFY COLUMN first_name VARCHAR(100);
 
+-- Rename a column
+ALTER TABLE student2
+RENAME COLUMN last_name TO surname;
 
+-- Add a UNIQUE constraint
+ALTER TABLE student2
+ADD CONSTRAINT unique_email UNIQUE (email);
 
+-- Remove the UNIQUE constraint
+ALTER TABLE student2
+DROP CONSTRAINT unique_email;
 
+*/
 
-
+/*
 --task1:: happines table :: last 2 
 /*
 HM1(ranking, cname);
@@ -125,9 +148,10 @@ FROM STUDENT
 ALTER TABLE STUDENT
 ADD COLUMN GRADE CHAR(2);
 
-UPDATE STUDENT
-SET GRADE = CASE
-               WHEN MARKS >= 90 THEN 'A+'
+ALTER TABLE STUDENT
+ADD GRADE AS 
+CASE
+	           WHEN MARKS >= 90 THEN 'A+'
                WHEN MARKS >= 80 THEN 'A'
                WHEN MARKS >= 70 THEN 'B'
                WHEN MARKS >= 60 THEN 'C'
