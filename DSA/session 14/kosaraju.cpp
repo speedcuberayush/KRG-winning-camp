@@ -73,14 +73,9 @@ private:
             if (!visited[curr])
             {
                 visited[curr] = true;
-
                 for (int neighbor : adjList[curr])
-                {
                     if (!visited[neighbor])
-                    {
                         s.push(neighbor);
-                    }
-                }
             }
         }
     }
