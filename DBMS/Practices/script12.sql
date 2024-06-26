@@ -74,7 +74,8 @@ ORDER BY EmpName;
 
 select * from vw_SORTEDNAMES;
 
-
+--select * into SORTEDNAMES from vw_SORTEDNAMES;
+--select * from SORTEDNAMES;
 --5. Create a view to show the department and employee name for all 'Managers'.
 CREATE VIEW vw_MANAGERNAMES AS 
 SELECT e.EmpName, d.DeptName,d.DeptId

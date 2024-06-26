@@ -1,0 +1,15 @@
+.AccordianL {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+  width: 70%;
+  background-color: #212121;
+  font-family: "Passion One", sans-serif !important;
+  overflow-x: hidden;
+}
+.MuiTypography-root {
+  font-family: "Passion One", sans-serif !important;
+  font-size: 1.2em !important;
+}

@@ -31,8 +31,7 @@ int main()
         }
         ++ptr2;
 
-        // cout << "END: " << *container.end() << endl;
-        if (ptr2 != container.end())
+                if (ptr2 != container.end())
             cost = max(dist[*ptr2], cost);
 
         total += cost;
