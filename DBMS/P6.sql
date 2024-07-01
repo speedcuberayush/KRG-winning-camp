@@ -165,11 +165,18 @@ SELECT max(salary) as maxm
 FROM empl
 WHERE salary < (SELECT MAX(salary) FROM empl));
 
-select * from empl order by salary desc;
 	--12. Find the names of employees who work in departments that have a salary sum greater than 150000.
-SELECT empname, salary
-FROM empl
-WHERE salary > (SELECT AVG(salary) FROM empl);
+SELECT e.empname, d.dname
+FROM empl e
+JOIN dept d ON e.deptid = d.id
+WHERE e.deptid IN (
+    SELECT deptid
+    FROM empl
+    GROUP BY deptid
+    HAVING SUM(salary) > 150000
+);
+
+
 
 	--13. List the employees who have a salary greater than every employee in the 'Admin' department.
 SELECT e.empname, e.salary
@@ -181,8 +188,6 @@ WHERE e.salary > ALL (
 );
 
 	--14. Retrieve the employees who joined before the employee with the highest salary in 'Counselling' department.
-select * from dept;
-select * from empl;
 
 
 	--15. Find the departments where the minimum salary is greater than 40000.
@@ -236,3 +241,321 @@ WHERE e.salary > (
     FROM empl
     WHERE city = e.city
 );
+
+
+--stored procedure
+/*
+
+why do we need stored procedure 
+- stored procedures are faster in execution 
+- stored queries
+- group or set of commands
+
+
+normal execution :
+	first time sql query - > select plan -> query execution
+sp:
+	
+sp_ : inbuilt stored procedure
+sp : user created
+
+create proc 
+create procedure sp_...
+as 
+	begin 
+
+	end
+
+executing sp
+1 : name 
+2 : execute spName
+3 : exec spName
+
+
+
+altering sp 
+
+alter procedure spName
+as 
+begin 
+end
+
+
+2 types of parameters
+-- in ,out ,in-out
+--input :: pass a paramaeter
+--output :: get something from procedure
+
+@id int-- variable init
+as	
+begin 
+end
+
+
+check content of sp
+
+sp_helptext
+
+securing the sp with encryption
+drop procedure procedure name 
+
+@varaiblename type (by default it is input)
+output type
+@variablename type OUTPUT
+
+
+DECALRE KEYWORD OUTSIDE PROCEDURE SCOPE
+
+find sp procedure 
+--db-programmability-stored procedure 
+*/
+
+
+select * from Employee_tbl1;
+select * from department;
+	--1. Create a stored procedure to insert a new employee into MyEmployees.
+
+alter procedure spInsertNew
+@EmpId int,
+@Empname varchar(20),
+@Email varchar(20),
+@Designation varchar(20),
+@ManagerId int
+as 
+begin
+	insert into Employee_tbl1 values(@empID,@Empname,@Email,@Designation,@ManagerId);
+end
+
+select * from Employee_tbl1;
+exec spInsertNew 9869,'Ayush','msdakm3334@gmail.com', 'Hero','11';
+
+select * from employee
+	--2. Create a stored procedure to update an employee's salary based on their EmpId.
+create procedure spUpdate
+as 
+@empid int,
+@salary int
+begin
+	update Employee_tbl1 set salary = @salary where EmpId=@empid;
+end
+
+
+	--3. Create a stored procedure to delete an employee based on their EmpId.
+create procedure spDelete
+@empid int
+as 
+begin
+	delete from Employee_tbl1 where empid=@empid;
+end
+
+exec spDelete 6
+select * from Employee_tbl1;
+	--4. Create a stored procedure to retrieve employee details along with their department name.
+	--5. Create a stored procedure to retrieve employees from a specific city.
+	--6. Create a stored procedure to count the number of employees in each department.
+	--7. Create a stored procedure to find the highest salary in each department.
+	--8. Create a stored procedure to update the department of an employee based on their EmpId.
+	--9. Create a stored procedure to retrieve employees who have a salary above a certain amount.
+	--10. Create a stored procedure to retrieve employees whose names start with a specific letter.
+	--11. Create a stored procedure to get the average salary of employees in a specific department.
+	--12. Create a stored procedure to get the total salary paid to employees in each city.
+	--13. Create a stored procedure to delete all employees from a specific department.
+	--14. Create a stored procedure to find the employee with the highest salary in each city.
+	--15. Create a stored procedure to retrieve employees who belong to a specific department.
+	--16. Create a stored procedure to find employees with the same salary in different departments.
+	--17. Create a stored procedure to get the total number of male and female employees.
+	--18. Create a stored procedure to find employees who joined after a certain date.
+	--19. Create a stored procedure to update the city of an employee based on their EmpId.
+	--20. Create a stored procedure to retrieve employees who belong to departments with a specific name.
+CREATE PROCEDURE spGetEmployeesByDepartmentName
+@DepartmentName VARCHAR(50)
+AS 
+BEGIN
+    SELECT e.*
+    FROM Employee_tbl1 e
+    JOIN Department d ON e.DeptId = d.DeptId
+    WHERE d.Deptname = @DepartmentName;
+END;
+
+
+
+
+-- 1. Insert a New Employee
+
+CREATE PROCEDURE InsertEmployee 
+    @FirstName VARCHAR(100),
+    @LastName VARCHAR(100),
+    @Gender CHAR(1),
+    @DepartmentId INT,
+    @City VARCHAR(100),
+    @Salary DECIMAL(10, 2),
+    @JoiningDate DATE
+
+AS
+BEGIN
+    INSERT INTO MyEmployees (FirstName, LastName, Gender, DepartmentId, City, Salary, JoiningDate)
+    VALUES (@FirstName, @LastName, @Gender, @DepartmentId, @City, @Salary, @JoiningDate);
+END;
+
+
+-- 2. Update Employee's Salary by EmpId
+
+CREATE PROCEDURE UpdateEmployeeSalary 
+    @EmpId INT,
+    @NewSalary DECIMAL(10, 2)
+
+AS
+BEGIN
+    UPDATE MyEmployees
+    SET Salary = @NewSalary
+    WHERE EmpId = @EmpId;
+END;
+
+
+-- 3. Delete Employee by EmpId
+
+CREATE PROCEDURE DeleteEmployee 
+    @EmpId INT
+
+AS
+BEGIN
+    DELETE FROM MyEmployees
+    WHERE EmpId = @EmpId;
+END;
+
+
+-- 4. Retrieve Employee Details with Department Name
+CREATE PROCEDURE GetEmployeeDetailsWithDepartment
+AS
+BEGIN
+    SELECT e.EmpId, e.FirstName, e.LastName, e.Gender, e.City, e.Salary, e.JoiningDate, d.DepartmentName
+    FROM MyEmployees e
+    JOIN Departments d ON e.DepartmentId = d.DepartmentId;
+END;
+
+
+-- 5. Retrieve Employees from a Specific City
+CREATE PROCEDURE GetEmployeesByCity 
+    @City VARCHAR(100)
+
+AS
+BEGIN
+    SELECT *
+    FROM MyEmployees
+    WHERE City = @City;
+END;
+
+
+
+
+-- 6. Count Number of Employees in Each Department
+CREATE PROCEDURE CountEmployeesByDepartment
+AS
+BEGIN
+    SELECT d.DepartmentName, COUNT(e.EmpId) AS EmployeeCount
+    FROM MyEmployees e
+    JOIN Departments d ON e.DepartmentId = d.DepartmentId
+    GROUP BY d.DepartmentName;
+END;
+
+-- 7. Find the Highest Salary in Each Department
+CREATE PROCEDURE spGetHighestSalaryByDepartment
+AS
+BEGIN
+    SELECT d.DepartmentName, MAX(e.Salary) AS HighestSalary
+    FROM MyEmployees e
+    JOIN Departments d ON e.DepartmentId = d.DepartmentId
+    GROUP BY d.DepartmentName;
+END;
+
+	--8. Create a stored procedure to update the department of an employee based on their EmpId.
+CREATE PROCEDURE spUpdateEmployeeDepartment 
+    @EmpId INT,
+    @NewDepartmentId INT
+
+AS
+BEGIN
+    UPDATE MyEmployees
+    SET DepartmentId = @NewDepartmentId
+    WHERE EmpId = @EmpId;
+END;
+
+	--9. Create a stored procedure to retrieve employees who have a salary above a certain amount.
+CREATE PROCEDURE spGetEmployeesWithSalaryAbove 
+    @Salary DECIMAL
+AS
+BEGIN
+    SELECT *
+    FROM MyEmployees
+    WHERE Salary > @Salary;
+END;
+
+	--10. Create a stored procedure to retrieve employees whose names start with a specific letter.
+CREATE PROCEDURE spGetEmployeesByNameStart 
+    @StartLetter CHAR(1)
+
+AS
+BEGIN
+    SELECT *
+    FROM MyEmployees
+    WHERE FirstName LIKE @StartLetter + '%';
+END;
+	--11. Create a stored procedure to get the average salary of employees in a specific department.
+CREATE PROCEDURE spGetAverageSalaryByDepartment 
+    @DepartmentId INT
+AS
+BEGIN
+    SELECT AVG(Salary) AS AverageSalary
+    FROM MyEmployees
+    WHERE DepartmentId = @DepartmentId;
+END;
+	--12. Create a stored procedure to get the total salary paid to employees in each city.
+
+CREATE PROCEDURE spGetTotalSalaryByCity
+AS
+BEGIN
+    SELECT City, SUM(Salary) AS TotalSalary
+    FROM MyEmployees
+    GROUP BY City;
+END;
+
+	--13. Create a stored procedure to delete all employees from a specific department.
+CREATE PROCEDURE spDeleteEmployeesByDepartment 
+    @DepartmentId INT
+AS
+BEGIN
+    DELETE FROM MyEmployees
+    WHERE DepartmentId = @DepartmentId;
+END;
+
+
+	--14. Create a stored procedure to find the employee with the highest salary in each city.
+CREATE PROCEDURE spGetHighestSalaryByCity
+AS
+BEGIN
+    SELECT City, MAX(Salary) AS HighestSalary
+    FROM MyEmployees
+    GROUP BY City;
+END;
+
+	--15. Create a stored procedure to retrieve employees who belong to a specific department.
+CREATE PROCEDURE asGetEmployeesByDepartment 
+    @DepartmentId INT
+AS
+BEGIN
+    SELECT *
+    FROM MyEmployees
+    WHERE DepartmentId = @DepartmentId;
+END;
+
+
+	--16. Create a stored procedure to find employees with the same salary in different departments.
+
+	--17. Create a stored procedure to get the total number of male and female employees.
+
+	--18. Create a stored procedure to find employees who joined after a certain date.
+
+	--19. Create a stored procedure to update the city of an employee based on their EmpId.
+
+	--20. Create a stored procedure to retrieve employees who belong to departments with a specific name.
+
