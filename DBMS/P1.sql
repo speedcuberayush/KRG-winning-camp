@@ -1,137 +1,200 @@
-create database practiceT;
-use practiceT;
+--created table and checked the constraints
+/*
+--create table sc1.TB1(
+--ID INT PRIMARY KEY, 
+--NAME VARCHAR(20),
+--EMAIL VARCHAR(15) NOT NULL,
+--ADDRESS VARCHAR(30) UNIQUE,
+--DOB DATE,
+--AGE INT,
+--SECTION VARCHAR(10) DEFAULT('NTPP-2'),
+--SCORE INT CHECK(SCORE>=70),
+--)
+*/
+
+--insert into sc1.TB1 values(1,'AYUSH','AYUSH@cuchd.in','NEK CHAND TOWER 5','2002-09-30',21,'KRG1',85);
+
+--check constraint
+--insert into sc1.TB1 values(2,'SAKSHAM','SAKS@cuchd.in','NEK CHAND TOWER 1','2003-11-13',20,'AIML1',65);
+
+--default value
+--insert into sc1.TB1 values(3,'AARYAN','AARYAN@cuchd.in','NEK CHAND TOWER 2','2004-10-20',19,DEFAULT,75);
+--insert into sc1.TB1 values(4,'MRADUL','MRADUL@cuchd.in','NEK CHAND TOWER 3','2003-09-26',20,'ECE',95);
+
+--primary key contraint, unique contraint
+--insert into sc1.contraintTABLE values(4,'MISHRA','MISH@cuchd.in','NEK CHAND TOWER 2','2003-09-26',20,'ECE',95);
 
 
-create table Employee (
-EmpId int UNIQUE NOT NULL,
-EmpName varchar(50) NOT NULL,
-Email varchar(50) NOT NULL,
-Designation varchar(50) NOT NULL
-)
+
+--select * from sc1.contraintTABLE;
 
 
-insert into Employee values(11, 'Alok', 'alok@xyx', 'Manager');
-insert into Employee values(12, 'Raman', 'raman@xyx', 'Assistant');
-insert into Employee values(13, 'Nisha', 'nisha@xyx', 'IT Incharge');
-insert into Employee values(14, 'Ashok', 'Ashok@xyx', 'Operator');
-insert into Employee values(15, 'Naman', 'Naman@xyx', 'AD');
-insert into Employee values(16, 'Ayush', 'Ayush@xyx', 'Professor');
 
-select * from Employee;x
+--PROBLEMS 
+--1. auto increment
+--2. auto increment from 100 to 105..
+--3. insert multiple values 
+--4. foreign key constraints
+--5. occurences and the counts
+--6. find 2 and 3 max in the table salary
 
-create table department(
-	DeptId int UNIQUE NOT NULL,
-	DeptName varchar(50),
-	Dept_salary bigint NOT NULL,
-	EmpId int UNIQUE NOT NULL);
 
-insert into department values (111, 'Admin', 50000, 13);
-insert into department values (222, 'Accounts', 45000, 12);
-insert into department values (333, 'IT', 66000, 11);
-insert into department values (444, 'Academics', 40000, 14);
-insert into department values (555, 'ERP', 70000, 17);
-insert into department values (666, 'Management', 80000, 18);
+--Q1) auto increment
+--create table TB1(
+--ID INT PRIMARY KEY IDENTITY(100,5), 
+--NAME VARCHAR(20),
+--EMAIL VARCHAR(15) NOT NULL,
+--ADDRESS VARCHAR(30) UNIQUE,
+--DOB DATE,
+--AGE INT,
+--SECTION VARCHAR(10) DEFAULT('NTPP-2'),
+--SCORE INT CHECK(SCORE>=70),
+--)
+
+--Q2) increment from 100 ++5
+
+--create table TB1(
+--ID INT PRIMARY KEY IDENTITY(100,5), 
+--NAME VARCHAR(20),
+--EMAIL VARCHAR(15) NOT NULL,
+--ADDRESS VARCHAR(30) UNIQUE,
+--DOB DATE,
+--AGE INT,
+--SECTION VARCHAR(10) DEFAULT('NTPP-2'),
+--SCORE INT CHECK(SCORE>=70),
+--)
+
+--insert into TB1 values('AYUSH','AYUSH@cuchd.in','NEK CHAND TOWER 5','2002-09-30',21,'KRG1',85);
+--insert into TB1 values('SAKSHAM','SAKS@cuchd.in','NEK CHAND TOWER 1','2003-11-13',20,'AIML1',75);
+--insert into TB1 values('AARYAN','AARYAN@cuchd.in','NEK CHAND TOWER 2','2004-10-20',19,DEFAULT,75);
+--insert into TB1 values('MRADUL','MRADUL@cuchd.in','NEK CHAND TOWER 3','2003-09-26',20,'ECE',95);
+
+
+--Q3. multiple insertion 
+--insert into TB1 (NAME,EMAIL,ADDRESS,DOB,AGE,SECTION,SCORE) values
+	--				 ('AYUSH','AYUSH@cuchd.in','NEK CHAND TOWER 5','2002-09-30',21,'KRG1',85),
+		--			   ('SAKSHAM','SAKS@cuchd.in','NEK CHAND TOWER 1','2003-11-13',20,'AIML1',75),
+			--		   ('AARYAN','AARYAN@cuchd.in','NEK CHAND TOWER 2','2004-10-20',19,DEFAULT,75),
+				--	   ('MRADUL','MRADUL@cuchd.in','NEK CHAND TOWER 3','2003-09-26',20,'ECE',95);
+
+
+
+--select * from TB1;
+
+--tables created 
+/*
+create table customer(
+	CID int primary key,
+	CNAME varchar(20),
+	ADDRESS varchar(MAX) NOT NULL,
+	CITY varchar(15),
+);
+*/
+/*
+create table orders(
+	OID int primary key,
+	ITEM varchar(20),
+	QUANTITY INT,
+	PRICE INT,
+	CID INT foreign key references customer(CID)
+	on update cascade
+	on delete cascade
+);
+*/
+
+--q.4) FOREIGN KEY ANOMALIES
+--insert into customer (CID,CNAME,ADDRESS,CITY) values 
+-- (1,'AYUSH','NC5','DELHI'),
+ --(2,'SAKSHAM','NC3','REWARI'),
+ --(3,'MRADUL','NC4','LUCKNOW');
+
+ --insert into orders(OID,ITEM,QUANTITY,PRICE,CID) values 
+ --(1,'TRIMMER',2,2400,1),
+ --(2,'TSHIRT',1,500,3),
+ --(3,'LAPTOP',2,77000,1),
+ --(4,'PEN',5,500,1),
+ --(5,'CANDY',4,1000,3);
+
  
- 
- 
 
- 
-------------------------------STRING PRACTICE SET--------------------------------------
---Extract the first 3 characters of each employee's name.
-select left(Empname,3) as first3 from Employee;
+ --anomalies
+ --child table 
+--insert
+--insert into orders values (6,'BAG',1,750,6); --6 CID does not exist
 
---Find the position of the '@' character in each employee's email address.
-select charindex('@',Email) as postion from Employee;
+--update(anomally)
+--update orders set CID=7 where OID=3;
 
+--delete (no anomally)
+--delete from orders where OID=3;
 
---Replace 'xyx' with 'example.com' in each employee's email address.
-select email,replace(email,'xyz','example') as replaced from employee;
-select * from employee;
+--parent table 
+--insert
+--no anomally
 
---Remove leading and trailing spaces from each employee's name.
-select ltrim(empname) as lT,
-rtrim(empname) as rT, 
-trim(empname) as trimmed 
-from employee;
+-- update (anomally)
+--update customer set CID=7 where CID=3;   updates the 3 to 7 due to cascade hence changes are reflected
 
---Extract the domain (part after '@') from each employee's email address.
-select email,substring(email,CHARINDEX('@',email)+1,len(email))as domain from employee;
+--delete (anomally)
+--delete from customer where CID=7;
 
---Repeat each employee's name twice.
-SELECT CONCAT(empname, ' ', empname) AS repeated_name FROM Employee;
+--Q5) find the sum of single occurences in a table 
+/*
+create table OCC(
+ID INT PRIMARY KEY IDENTITY,
+val INT,
+);
+*/
+--insert into OCC(val) values (1),(2),(2),(5),(3),(4),(3),(4);
+/*
+SELECT val
+FROM OCC
+GROUP BY val
+HAVING COUNT(*) = 1;
+*/
+/*
+SELECT SUM(val) AS ANS
+FROM OCC
+WHERE val IN (
+    SELECT val
+    FROM OCC
+    GROUP BY val
+    HAVING COUNT(*) = 1
+);
+*/
 
---Insert 'Employee: ' at the beginning of each employee's name.
-SELECT CONCAT('Employee: ', empname) AS prefixed_name FROM Employee;
-
---Find employees whose names contain the letter 'KA' using a pattern search.
-select empname from Employee where patindex(empname,'%ka%') >0;
-
-
-
---Concatenate each employee's name with their designation, separated by a hyphen.
-select CONCAT(Empname,'-',Designation) from employee;
-
-select * from employee;
-
---Format the department salary as a currency value.
-SELECT DeptName, FORMAT(Dept_salary, 'c') AS formatted_salary
-FROM Department;
-
-select * from department;
-
-
---Concatenate all employee names into a single string, separated by commas.
-select STRING_AGG(empname,', ') as allemp 
-from Employee;
-
-
-
-CREATE TABLE Employee_tbl1 (
-    EmpId INT UNIQUE NOT NULL,
-    EmpName VARCHAR(50) NOT NULL,
-    Email VARCHAR(50) NOT NULL,
-    Designation VARCHAR(50) NOT NULL,
-    ManagerId INT NULL
+--Q6) find the 2nd and 3rd highest salary 
+/*
+create table SALARY(
+ID INT PRIMARY KEY IDENTITY,
+val float,
+);
+*/
+--insert into SALARY (val) values (1000),(2000),(3000),(4000),(5000);
+/*
+	SELECT val AS ANS2
+	FROM SALARY
+	WHERE val = (
+		SELECT MAX(val)
+		FROM SALARY
+		WHERE val < (
+			SELECT MAX(val)
+			FROM SALARY
+    )
 );
 
-INSERT INTO Employee_tbl1 VALUES (11, 'Alok', 'alok@xyx', 'Manager', NULL);
-INSERT INTO Employee_tbl1 VALUES (12, 'Raman', 'raman@xyx', 'Assistant', 11);
-INSERT INTO Employee_tbl1 VALUES (13, 'Nisha', 'nisha@xyx', 'IT Incharge', 11);
-INSERT INTO Employee_tbl1 VALUES (14, 'Ashok', 'ashok@xyx', 'Operator', NULL);
-INSERT INTO Employee_tbl1 VALUES (15, 'Naman', 'naman@xyx', 'AD', 14);
-INSERT INTO Employee_tbl1 VALUES (16, 'Ayush', 'ayush@xyx', 'Professor', 14);
-
-	--11. Write a query to display pairs of  employees who have the same manager.
-SELECT e1.empname, e2.empname as managername, e1.Managerid
-FROM Employee_tbl1 e1
-INNER JOIN Employee_tbl1 e2 ON e1.managerid = e2.managerId AND e1.empid <> e2.empid;
-select * from Employee_tbl1;
-
-
-
-	--12. Write a query to display the count of employees under each manager.
-SELECT Managerid, COUNT(EmpId) AS EmployeeCount
-FROM Employee_tbl1
-GROUP BY Managerid
-having managerid is not null;
-
-
-	--13. Write a query to display all employees along with their department names. Include employees who do not have a department.
-
-	--14. Write a query to display department names, their employee names, and the total salary of each department.
-
-	--15. Write a query to display employee names, their department names, and their manager names.
-
-	--16. Write a query to display the names of employees who do not belong to any department.
-
-	--17. Write a query to display department names and their corresponding employee names where the department salary is greater than 60000.
-
-	--18. Write a query to display the names of employees who work in the IT department in ascending order.
-
-	--19. Write a query to display employee names and department names where the department salary is greater than 50000 order by descending.
-
-	--20. Write a query to display the names of employees who do not belong to any department in ascending order.
-
-	--21. Write a query to display department names, salaries, and their corresponding employee names. Include departments without employees in descending order.
-
-	--22. Write a query to display records where there is a mismatch between employees and departments having order as employee name and department name in descending order.
+SELECT val AS ANS3
+FROM SALARY
+WHERE val = (
+    SELECT MAX(val)
+    FROM SALARY
+    WHERE val < (
+        SELECT MAX(val)
+        FROM SALARY
+        WHERE val < (
+            SELECT MAX(val)
+            FROM SALARY
+        )
+    )
+);
+*/

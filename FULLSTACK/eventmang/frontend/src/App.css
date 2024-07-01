@@ -1,0 +1,26 @@
+.App {
+  padding: 0;
+  margin: 0;
+  background-color: #111216;
+  scroll-behavior: smooth !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+x 
+/* Track */
+::-webkit-scrollbar-track {
+  background: #3a3a3a;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 20px; /* or any value you prefer */
+}

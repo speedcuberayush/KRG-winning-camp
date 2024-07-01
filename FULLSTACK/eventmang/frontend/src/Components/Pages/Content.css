@@ -1,0 +1,13 @@
+.Content {
+  flex: 0.6;
+  padding: 1rem;
+  overflow-y: auto; /* Allows vertical scrolling if content overflows */
+  border-right: 2px solid #ddd; /* Adds a border around the container */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+  margin: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  height: 100%;
+  align-items: center;
+}

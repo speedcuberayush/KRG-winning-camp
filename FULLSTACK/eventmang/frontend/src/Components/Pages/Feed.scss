@@ -1,0 +1,41 @@
+.sideBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-direction: column;
+  height: 100vh !important;
+  padding-right: 20px;
+  border-right: 1.5px solid #fff;
+}
+
+.LandingTitle {
+  font-size: 5em;
+  color: #fff;
+  font-family: "Passion One", sans-serif;
+}
+
+.LandingTitle span {
+  color: #0096ff;
+}
+.Feed {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100vh;
+  animation: vanish2 2s ease-in-out;
+}
+.FeedPP {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.FeedPart {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: calc(100% - 8em);
+}

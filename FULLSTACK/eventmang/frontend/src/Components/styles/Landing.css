@@ -1,0 +1,357 @@
+@import url("https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&display=swap");
+.Landingcontainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: auto;
+  animation: vanish1 2s ease-in-out;
+}
+@keyframes vanish1 {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.LandingMain {
+  font-family: "Passion One", sans-serif;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-image: url("https://cdn.leonardo.ai/users/a0e3d238-9331-4629-8e65-7dd741edb548/generations/9292494d-1b21-483d-96c1-0a3af5c81f01/Default_event_management_illustration_blue_technical_theme_0.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+.LandingDivision {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.LandingMain::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  z-index: 1;
+}
+
+.LandingMain > * {
+  position: relative;
+  z-index: 2;
+}
+
+.LandingSlogan {
+  font-size: 3em;
+}
+
+.LandingPara {
+  width: 50vw;
+  text-align: center;
+  font-size: 1.2em;
+}
+
+.LandingButton {
+  font-family: "Passion One", sans-serif;
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 20px;
+  border: 1px solid #0096ff;
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  background: transparent;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+.LandingButton:hover {
+  background: #0096ff;
+  box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.815);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
+}
+
+.LandingButton:hover::before {
+  -webkit-animation: sh02 0.5s 0s linear;
+  -moz-animation: sh02 0.5s 0s linear;
+  animation: sh02 0.5s 0s linear;
+}
+
+.LandingButton::before {
+  content: "";
+  display: block;
+  width: 0px;
+  height: 86%;
+  position: absolute;
+  top: 7%;
+  left: 0%;
+  opacity: 0;
+  background: #fff;
+  box-shadow: 0 0 50px 30px #fff;
+  -webkit-transform: skewX(-20deg);
+  -moz-transform: skewX(-20deg);
+  -ms-transform: skewX(-20deg);
+  -o-transform: skewX(-20deg);
+  transform: skewX(-20deg);
+}
+
+@keyframes sh02 {
+  from {
+    opacity: 0;
+    left: 0%;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    left: 100%;
+  }
+}
+
+.LandingButton:active {
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: box-shadow 0.2s ease-in;
+  -moz-transition: box-shadow 0.2s ease-in;
+  transition: box-shadow 0.2s ease-in;
+}
+
+a {
+  text-decoration: none;
+}
+.menu__link {
+  color: #fff;
+  line-height: 2;
+  position: relative;
+}
+
+.menu__link::before {
+  content: "";
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background-color: #fff;
+  position: absolute;
+  bottom: -0.25rem;
+  right: 0;
+  transition: right 0.4s, width 0.4s, left 0.4s;
+}
+
+.menu__link:hover::before {
+  width: 100%;
+  left: 0;
+}
+.LandingBtn {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  gap: 2em;
+  align-items: center;
+}
+
+.LandingTitle {
+  font-size: 5em;
+}
+
+.LandingTitle span {
+  color: #0096ff;
+}
+
+.AcPart {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  flex-direction: column;
+  gap: 10px;
+  height: 100vh;
+  background-color: #212121;
+}
+
+.FAQH {
+  color: #fff;
+  font-family: "Passion One", sans-serif;
+  font-size: 3em;
+}
+
+.LandingImageSection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 120vh;
+  flex-direction: column;
+  gap: 30px;
+  background-color: #111216;
+  padding: 10% 0;
+}
+
+.LISTEXT {
+  color: #fff;
+  font-family: "Passion One", sans-serif;
+  font-size: 3em;
+}
+.PartnerContainerss {
+  height: 50vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  background-color: #fff;
+  flex-direction: column;
+}
+.PCTEXT {
+  color: #111216;
+  text-align: center;
+  font-family: "Passion One", sans-serif;
+  font-size: 3em;
+}
+
+.LandingAboutus {
+  display: flex;
+  align-items: center;
+  padding-top: 5%;
+  justify-content: center;
+  background-color: #fff;
+}
+
+.notification {
+  display: flex;
+  flex-direction: column;
+  isolation: isolate;
+  position: relative;
+  width: 70%;
+  /* height: 290px; */
+  /* background: #29292c; */
+  border-radius: 1rem;
+  padding: 20px;
+  overflow: hidden;
+  font-family: "Passion One", "Gill Sans", "Gill Sans MT", Calibri,
+    "Trebuchet MS", sans-serif;
+  font-size: 16px;
+  --gradient: linear-gradient(to bottom, #2eadff, #3d83ff, #7e61ff);
+  --color: #32a6ff;
+}
+
+.notification:before {
+  position: absolute;
+  content: "";
+  inset: 0.0625rem;
+  border-radius: 0.9375rem;
+  /* background: #18181b; */
+  z-index: 2;
+}
+
+.notification:after {
+  position: absolute;
+  content: "";
+  width: 0.25rem;
+  inset: 0.65rem auto 0.65rem 0.5rem;
+  border-radius: 0.125rem;
+  background: var(--gradient);
+  transition: transform 300ms ease;
+  z-index: 4;
+}
+
+.notification:hover:after {
+  transform: translateX(0.15rem);
+}
+
+.notititle {
+  color: var(--color);
+  padding: 0.65rem 0.25rem 0.4rem 1.25rem;
+  font-weight: 500;
+  transition: transform 300ms ease;
+  z-index: 5;
+  font-size: 3em;
+}
+
+.notification:hover .notititle {
+  transform: translateX(0.15rem);
+}
+
+.notibody {
+  color: #99999d;
+  padding: 0 1.25rem;
+  transition: transform 300ms ease;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 1.25em;
+  height: 100%;
+  justify-content: space-evenly;
+}
+
+.notification:hover .notibody {
+  transform: translateX(0.25rem);
+}
+
+.notiglow,
+.notiborderglow {
+  position: absolute;
+  width: 20rem;
+  height: 20rem;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(
+    circle closest-side at center,
+    white,
+    transparent
+  );
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.notiglow {
+  z-index: 3;
+}
+
+.notiborderglow {
+  z-index: 1;
+}
+
+.notification:hover .notiglow {
+  opacity: 0.1;
+}
+
+.notification:hover .notiborderglow {
+  opacity: 0.1;
+}
+
+.note {
+  color: var(--color);
+  position: fixed;
+  top: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 0.9rem;
+  width: 75%;
+}
+
+.menu__link {
+  scroll-behavior: smooth !important;
+}

@@ -1,0 +1,90 @@
+/* Post.css */
+@import url("https://fonts.googleapis.com/css2?family=Passion+One:wght@400;700;900&display=swap");
+.postContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #fff;
+  padding: 15px;
+  margin: 10px 0;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: "Passion One", sans-serif;
+  transition: box-shadow 0.3s ease;
+  position: relative; /* Ensure the overlay is positioned relative to this container */
+}
+
+.postContent img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  transition: 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.postContent:hover img {
+  filter: grayscale(100%); /* Apply gray tint on hover */
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  opacity: 0;
+  font-size: 2em;
+  display: flex;
+  flex-direction: column-reverse;
+  transition: opacity 0.3s ease;
+}
+
+.postContent:hover .overlay {
+  opacity: 1; /* Show overlay on hover */
+  font-size: 2em;
+}
+
+.PostContenttext {
+  font-size: 1.25em;
+  color: #fff;
+  text-align: left;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+}
+
+.shadow__btn {
+  font-family: "Passion One";
+  padding: 10px 20px;
+  border: none;
+  font-size: 17px;
+  color: #fff;
+  border-radius: 20px;
+  /* letter-spacing: 4px; */
+  cursor: pointer;
+  font-weight: 700;
+  text-transform: uppercase;
+  transition: 0.5s;
+  transition-property: box-shadow;
+}
+
+.shadow__btn {
+  background: rgb(0, 140, 255);
+  box-shadow: 0 0 25px rgb(0, 140, 255);
+}
+
+.shadow__btn:hover {
+  box-shadow: 0 0 5px rgb(0, 140, 255), 0 0 25px rgb(0, 140, 255),
+    0 0 50px rgb(0, 140, 255), 0 0 100px rgb(0, 140, 255);
+}
+
+.postCnn {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  justify-content: space-between;
+}
