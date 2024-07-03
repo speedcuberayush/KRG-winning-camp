@@ -513,9 +513,9 @@ BEGIN
 END;
 
 	--18. Create a stored procedure to find employees who joined after a certain date.
-CREATE PROCEDURE spGetEmployeesJoinedAfter (
+CREATE PROCEDURE spGetEmployeesJoinedAfter 
     @JoiningDate DATE
-)
+
 AS
 BEGIN
     SELECT *
@@ -524,10 +524,10 @@ BEGIN
 END;
 
 	--19. Create a stored procedure to update the city of an employee based on their EmpId.
-CREATE PROCEDURE spUpdateEmployeeCity (
+CREATE PROCEDURE spUpdateEmployeeCity 
     @EmpId INT,
     @NewCity VARCHAR(100)
-)
+
 AS
 BEGIN
     UPDATE MyEmployees
@@ -536,9 +536,9 @@ BEGIN
 END;
 
 	--20. Create a stored procedure to retrieve employees who belong to departments with a specific name.
-	CREATE PROCEDURE spGetEmployeesByDepartmentName (
+CREATE PROCEDURE spGetEmployeesByDepartmentName 
     @DepartmentName VARCHAR(100)
-)
+
 AS
 BEGIN
     SELECT e.*
@@ -546,3 +546,48 @@ BEGIN
     JOIN Departments d ON e.DepartmentId = d.DepartmentId
     WHERE d.DepartmentName = @DepartmentName;
 END;
+
+
+select * from MyEmployees;
+
+drop table Employees1111;
+CREATE TABLE Employees1111 (
+    EmployeeID INT IDENTITY(1,1) PRIMARY KEY,
+    FirstName NVARCHAR(50),
+    LastName NVARCHAR(50),
+    Position NVARCHAR(50),
+    Salary DECIMAL(10, 2)
+);
+
+-- Execute the BULK INSERT command to load data from the text file
+BULK INSERT Employees1111
+FROM 'C:\Users\msdak\OneDrive\Desktop\Kargil-winning-camp\DBMS\insert.txt'  
+WITH (
+    FIELDTERMINATOR = ',',  
+    ROWTERMINATOR = '\n', 
+    FIRSTROW = 1  
+);
+
+TRUNCATE TABLE EMPLOYEES1111;
+
+select * from Employees1111;
+
+
+CREATE TABLE TEMPY (
+    empId int cast(IDENTITY(65, 1) as char) PRIMARY KEY,
+    empChar CHAR(1) NOT NULL
+);
+
+
+
+SELECT d.DepartmentName, MAX(e.Salary) AS HighestSalary
+INTO [backupTable%^^&(!@#$%^&*()]
+    FROM MyEmployees e
+    JOIN Departments d ON e.DepartmentId = d.DepartmentId
+    GROUP BY d.DepartmentName;
+
+
+select * from [backupTable%^^&(!@#$%^&*()];
+
+
+select * into backuptt from MyEmployees e join Departments d on e.DepartmentId=d.DepartmentId;
