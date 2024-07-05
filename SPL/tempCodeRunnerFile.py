@@ -1,0 +1,1 @@
+BetaJi.Hello()
