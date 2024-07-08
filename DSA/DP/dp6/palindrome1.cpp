@@ -1,48 +1,43 @@
 #include <bits/stdc++.h>
 using namespace std;
-vector<vector<bool>> find_all_palindromes(const string &text)
+bool check(int i, int j, string &a)
 {
-    int n = text.size();
-    vector<vector<bool>> palindromes(n, vector<bool>(n, false));
-    for (int i = n - 1; i >= 0; i--)
+    while (i <= j)
     {
-        for (int j = i; j < n; j++)
-        {
-            if (i == j)
-                palindromes[i][j] = true;
-
-            else if (text[i] == text[j])
-            {
-                if (j - i == 1)
-                    palindromes[i][j] = true;
-                else
-                    palindromes[i][j] = palindromes[i + 1][j - 1];
-            }
-        }
+        if (a[i] != a[j])
+            return 0;
+        i++;
+        j--;
     }
 
-    return palindromes;
+    return 1;
 }
 
-int Solution::minCut(string A)
+int solve(int i, int j, string &a, vector<vector<int>> &dp)
 {
-    int n = A.size();
-    if (n == 0)
+
+    if (i == j)
         return 0;
 
-    vector<vector<bool>> palindromes = find_all_palindromes(A);
-    vector<int> dp(n);
+    if (check(i, j, a))
+        return 0;
 
-    for (int i = 0; i < n; i++)
+    if (dp[i][j] != -1)
+        return dp[i][j];
+
+    int cuts = INT_MAX;
+    for (int k = i; k < j; k++)
     {
-        dp[i] = INT_MAX;
-        if (palindromes[0][i])
-            dp[i] = 0;
-        else
-            for (int j = i; j > 0; j--)
-                if (palindromes[j][i])
-                    dp[i] = min(dp[j - 1] + 1, dp[i]);
+        int ans = solve(i, k, a, dp) + solve(k + 1, j, a, dp);
+        cuts = min(cuts, ans + 1);
     }
 
-    return dp[n - 1];
+    return dp[i][j] = cuts;
+}
+
+int Solution::minCut(string a)
+{
+    int n = a.size();
+    vector<vector<int>> dp(n, vector<int>(n, -1));
+    return solve(0, n - 1, a, dp);
 }
