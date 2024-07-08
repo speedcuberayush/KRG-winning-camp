@@ -372,43 +372,10 @@ select dbo.fnAverage(2);
 	--employee ID (EmpId) as an input parameter and return a message indicating whether
 	--the employee was successfully deleted or not found. Ensure that the function handles
 	--cases where the employee ID does not exist in the table.
-CREATE FUNCTION fnDelete(
-    @EmpId INT,
-    @EmpName NVARCHAR(50),
-    @Gender CHAR(1),
-    @Salary DECIMAL(10, 2),
-    @City NVARCHAR(50),
-    @DeptId INT
-)
-RETURNS NVARCHAR(100)
-AS
-BEGIN
-    DECLARE @DeptExists INT;
-    SELECT  @DeptExists = CASE WHEN EXISTS (SELECT 1 FROM Department WHERE id = @DeptId) THEN 1 ELSE 0 END;
-    IF @DeptExists = 1
-    BEGIN
-        DELETE department WHERE DEPARTMENTID=@DeptId;
-        RETURN 'Employee deleted. Department exists.';
-    END
-    ELSE
-    BEGIN
-        RETURN 'Department does not exist.';
-    END
-END;
 
 
 	--6. Create a function that Finds the highest salary in each department.
-CREATE FUNCTION fnFindHighestSalaryInEachDept ()
-RETURNS TABLE
-AS
-RETURN
-(
-    SELECT DepartmentId, MAX(Salary) AS HighestSalary
-    FROM MyEmployees
-    GROUP BY DepartmentId
-);
 
-select * from fnFindHighestSalaryInEachDept()
 
 	--7. Create a function that Retrieves employees who have a salary above the average salary of their department.
 CREATE FUNCTION fnRetrieveEmployeesAboveAvgSalary ()
@@ -438,6 +405,27 @@ select * from fnRetrieveEmployeesAboveAvgSalary();
 	--ID (@DeptId), department name (@DeptName), and the old department ID (@OldDeptId) 
 	--as input parameters. It should return a message indicating that the department 
 	--was inserted and employees were updated.
+CREATE FUNCTION InsertDeptAndUpdateEmployees
+(
+    @DeptId INT,
+    @DeptName NVARCHAR(100),
+    @OldDeptId INT
+)
+RETURNS NVARCHAR(255)
+AS
+BEGIN
+    -- Insert the new department
+    INSERT INTO Dept (DeptId, DeptName)
+    VALUES (@DeptId, @DeptName);
+
+    -- Update the department ID for employees in the MyEmployees table
+    UPDATE MyEmployees
+    SET DeptId = @DeptId
+    WHERE DeptId = @OldDeptId;
+
+    -- Return a message
+    RETURN CONCAT('Department ', @DeptName, ' was inserted and employees were updated.');
+END;
 
 
 
@@ -473,3 +461,256 @@ select * from fnRetrieveEmployeesAboveAvgSalary();
 	--19. Create a function that Retrieves employees whose names end with 'a'.
 
 	--20. Create a function that Finds the maximum salary of employees in each city.
+
+
+	-- 1. InsertDeptAndUpdateEmployees
+CREATE FUNCTION InsertDeptAndUpdateEmployees
+(
+    @DeptId INT,
+    @DeptName NVARCHAR(100),
+    @OldDeptId INT
+)
+RETURNS NVARCHAR(255)
+AS
+BEGIN
+    -- Insert the new department
+    INSERT INTO Dept (DeptId, DeptName)
+    VALUES (@DeptId, @DeptName);
+
+    -- Update the department ID for employees in the MyEmployees table
+    UPDATE MyEmployees
+    SET DeptId = @DeptId
+    WHERE DeptId = @OldDeptId;
+
+    -- Return a message
+    RETURN CONCAT('Department ', @DeptName, ' was inserted and employees were updated.');
+END;
+
+
+-- 2. GetEmployeesSameMonthDifferentYears
+CREATE FUNCTION GetEmployeesSameMonthDifferentYears()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT e1.*
+    FROM MyEmployees e1
+    JOIN MyEmployees e2
+    ON MONTH(e1.JoinDate) = MONTH(e2.JoinDate)
+    AND YEAR(e1.JoinDate) <> YEAR(e2.JoinDate)
+    WHERE e1.EmpId <> e2.EmpId
+);
+
+
+-- 3. GetTotalSalaryByCity
+CREATE FUNCTION GetTotalSalaryByCity
+(
+    @City NVARCHAR(100)
+)
+RETURNS DECIMAL(18, 2)
+AS
+BEGIN
+    DECLARE @TotalSalary DECIMAL(18, 2);
+
+    SELECT @TotalSalary = SUM(Salary)
+    FROM MyEmployees
+    WHERE City = @City;
+
+    RETURN @TotalSalary;
+END;
+
+
+-- 4. UpdateEmployeeSalary
+CREATE FUNCTION UpdateEmployeeSalary
+(
+    @EmpId INT,
+    @NewSalary DECIMAL(18, 2)
+)
+RETURNS NVARCHAR(255)
+AS
+BEGIN
+    -- Update the salary
+    UPDATE MyEmployees
+    SET Salary = @NewSalary
+    WHERE EmpId = @EmpId;
+
+    -- Check if the update was successful
+    IF @@ROWCOUNT > 0
+        RETURN 'Employee salary was updated successfully.';
+    ELSE
+        RETURN 'Employee not found or salary not updated.';
+END;
+
+
+-- 5. GetEmployeesWithIInName
+CREATE FUNCTION GetEmployeesWithIInName()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT EmpName
+    FROM MyEmployees
+    WHERE EmpName LIKE '%i%'
+);
+
+
+-- 6. GetEmployeeCountByDepartment
+CREATE FUNCTION GetEmployeeCountByDepartment()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT DeptId, COUNT(*) AS EmployeeCount
+    FROM MyEmployees
+    GROUP BY DeptId
+);
+
+
+-- 7. GetDepartmentsWithNoEmployees
+CREATE FUNCTION GetDepartmentsWithNoEmployees()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT d.DeptId, d.DeptName
+    FROM Dept d
+    LEFT JOIN MyEmployees e
+    ON d.DeptId = e.DeptId
+    WHERE e.DeptId IS NULL
+);
+
+
+-- 8. GetAverageSalaryByCity
+CREATE FUNCTION GetAverageSalaryByCity()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT City, AVG(Salary) AS AverageSalary
+    FROM MyEmployees
+    GROUP BY City
+);
+
+
+
+-- 9. InsertNewEmployeeAndReturnList
+CREATE FUNCTION InsertNewEmployeeAndReturnList
+(
+    @EmpName NVARCHAR(100),
+    @DeptId INT,
+    @JoinDate DATE,
+    @Salary DECIMAL(18, 2),
+    @City NVARCHAR(100)
+)
+RETURNS TABLE
+AS
+RETURN
+(
+    -- Insert the new employee
+    INSERT INTO MyEmployees (EmpName, DeptId, JoinDate, Salary, City)
+    VALUES (@EmpName, @DeptId, @JoinDate, @Salary, @City);
+
+    -- Return the updated employee list
+    SELECT * FROM MyEmployees;
+);
+
+
+-- 10. GetMinSalaryByDepartment
+CREATE FUNCTION GetMinSalaryByDepartment()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT DeptId, EmpName, Salary
+    FROM MyEmployees
+    WHERE Salary = (SELECT MIN(Salary) FROM MyEmployees WHERE DeptId = MyEmployees.DeptId)
+);
+
+
+-- 11. DeleteLowSalaryEmployees
+CREATE FUNCTION DeleteLowSalaryEmployees
+(
+    @Threshold DECIMAL(18, 2)
+)
+RETURNS NVARCHAR(255)
+AS
+BEGIN
+    -- Delete employees with salary below the threshold
+    DELETE FROM MyEmployees
+    WHERE Salary < @Threshold;
+
+    -- Return a message
+    RETURN CONCAT('Employees with salaries below ', @Threshold, ' were deleted.');
+END;
+
+
+-- 12. GetEmployeesWithNameEndingInA
+CREATE FUNCTION GetEmployeesWithNameEndingInA()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT EmpName
+    FROM MyEmployees
+    WHERE EmpName LIKE '%a'
+);
+
+
+-- 13. GetMaxSalaryByCity
+CREATE FUNCTION GetMaxSalaryByCity()
+RETURNS TABLE
+AS
+RETURN
+(
+    SELECT City, MAX(Salary) AS MaxSalary
+    FROM MyEmployees
+    GROUP BY City
+);
+
+
+CREATE TABLE Dept
+(
+    DeptId INT PRIMARY KEY,    -- Department ID, primary key
+    DeptName NVARCHAR(100)     -- Department name
+);
+
+
+-- Create MyEmployees table
+CREATE TABLE MyEmployees
+(
+    EmpId INT IDENTITY(1,1) PRIMARY KEY,  -- Employee ID, primary key with auto-increment
+    EmpName NVARCHAR(100),                -- Employee name
+    DeptId INT,                           -- Department ID, foreign key
+    JoinDate DATE,                        -- Join date
+    Salary DECIMAL(18, 2),                -- Salary
+    City NVARCHAR(100),                   -- City
+    FOREIGN KEY (DeptId) REFERENCES Dept(DeptId)  -- Foreign key reference to Dept table
+);
+
+
+-- Insert sample data into Dept table
+INSERT INTO Dept (DeptId, DeptName)
+VALUES (1, 'Human Resources'),
+       (2, 'Finance'),
+       (3, 'Engineering'),
+       (4, 'Marketing');
+
+
+-- Insert sample data into MyEmployees table
+INSERT INTO MyEmployees (EmpName, DeptId, JoinDate, Salary, City)
+VALUES ('Alice Johnson', 1, '2020-01-15', 55000.00, 'New York'),
+       ('Bob Smith', 2, '2019-05-22', 65000.00, 'Los Angeles'),
+       ('Charlie Davis', 3, '2018-03-12', 75000.00, 'Chicago'),
+       ('Diana Moore', 1, '2021-07-01', 60000.00, 'New York'),
+       ('Eva Harris', 4, '2022-09-30', 58000.00, 'Miami'),
+       ('Frank Taylor', 3, '2017-11-05', 72000.00, 'Dallas'),
+       ('Grace Lee', 2, '2023-02-20', 68000.00, 'San Francisco'),
+       ('Henry Martin', 4, '2016-06-18', 56000.00, 'Boston');
+
+
+select * from MyEmployees;
+
+begin tran 
+	update MyEmployees set DeptId=4 where Salary>50000;
+rollback tran
+commit tran

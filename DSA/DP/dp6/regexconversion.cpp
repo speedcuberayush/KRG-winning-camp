@@ -15,7 +15,7 @@ public:
         {
             bool previous = dp[0];
             dp[0] = false;
-            
+
             for (int j = 1; j <= p.size(); ++j)
             {
                 bool curr = dp[j];
