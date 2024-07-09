@@ -363,8 +363,65 @@ BEGIN TRANSACTION
 	ROLLBACK TRANSACTION SAVE_PT1
 
 
---student table with marks return average
---id name marks
-1 A 85,86,84,82,74
-2 B 94,58,65,25,54
-3 C 52,65,
+----student table with marks return average
+----id name marks
+--1 A 85,86,84,82,74
+--2 B 94,58,65,25,54
+--3 C 52,65,........
+--4 D .....
+--5 E .......
+drop table students;
+
+--CREATE TABLE student (
+--    id INT PRIMARY KEY,
+--    name VARCHAR(50),
+--    marks VARCHAR(255)
+--);
+
+---- Insert sample data into the student table
+--INSERT INTO student (id, name, marks) VALUES
+--(1, 'A', '85,86,84,82,74'),
+--(2, 'B', '94,58,65,25,54'),
+--(3, 'C', '52,65,70,75,60'),
+--(4, 'D', '88,72,91,85,79'),
+--(5, 'E', '75,81,67,68,74');
+
+--CREATE FUNCTION fn_CalculateAverageMarks (@marks VARCHAR(MAX))
+--RETURNS FLOAT
+--AS
+--BEGIN
+--    DECLARE @start INT, @end INT, @value INT, @sum INT, @count INT
+--    SET @start = 1
+--    SET @sum = 0
+--    SET @count = 0
+
+--    WHILE @start <= LEN(@marks)
+--    BEGIN
+--        SET @end = CHARINDEX(',', @marks, @start)
+--        IF @end = 0
+--            SET @end = LEN(@marks) + 1
+
+--        SET @value = CAST(SUBSTRING(@marks, @start, @end - @start) AS INT)
+--        SET @sum = @sum + @value
+--        SET @count = @count + 1
+
+--        SET @start = @end + 1
+--    END
+
+--    RETURN CAST(@sum AS FLOAT) / @count
+--END
+
+SELECT
+    id,
+    name,
+    dbo.fn_CalculateAverageMarks(marks) AS average_marks
+FROM student;
+
+
+--SELECT
+--    id,
+--    name,
+--    (SELECT AVG(CAST(value AS FLOAT))
+--     FROM STRING_SPLIT(marks, ',')
+--    ) AS average_marks
+--FROM student;
