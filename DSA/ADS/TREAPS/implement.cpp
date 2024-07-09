@@ -48,7 +48,6 @@ Node *insert(Node *root, int key, int priority)
         if (root->right->priority > root->priority)
             root = leftRotate(root);
     }
-
     return root;
 }
 
