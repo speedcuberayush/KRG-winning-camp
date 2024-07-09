@@ -1,40 +1,39 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector<int> countSort(vector<int> &arr)
+class Solution
 {
-    int N = arr.size();
-    int M = *max_element(arr.begin(), arr.end());
-    vector<int> count(M + 1, 0);
-    for (int i = 0; i < N; i++)
-        count[arr[i]]++;
-    for (int i = 1; i <= M; i++)
-        count[i] += count[i - 1];
-    vector<int> ans(N);
-
-    for (int i = N - 1; i >= 0; i--)
+public:
+    int findKthLargest(vector<int> &nums, int k)
     {
-        ans[count[arr[i]] - 1] = arr[i];
-        count[arr[i]]--;
+        int start = 0, end = nums.size() - 1;
+        while (true)
+        {
+            int piv = rand() % (end - start + 1) + start;
+            int newPiv = partition(nums, start, end, piv);
+            if (newPiv == nums.size() - k)
+                return nums[newPiv];
+
+            else if (newPiv > nums.size() - k)
+                end = newPiv - 1;
+
+            else
+                start = newPiv + 1;
+        }
     }
 
-    return ans;
-}
+private:
+    int partition(vector<int> &nums, int start, int end, int piv)
+    {
+        int pivot = nums[piv];
+        swap(nums[piv], nums[end]);
 
-int main()
-{
-    vector<int> arr = {9, 7, 2, 4, 1};
-    cout << "Original array: ";
-    for (auto i : arr)
-        cout << i << " ";
-    cout << endl;
+        int temp = start;
+        for (int i = start; i < end; i++)
+            if (nums[i] < pivot)
+                swap(nums[i], nums[temp++]);
+        swap(nums[end], nums[temp]);
 
-    arr = countSort(arr);
-
-    cout << "Sorted array: ";
-    for (auto i : arr)
-        cout << i << " ";
-    cout << endl;
-
-    return 0;
-}
+        return temp;
+    }
+};
