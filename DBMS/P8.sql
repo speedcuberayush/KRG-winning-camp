@@ -418,10 +418,197 @@ SELECT
 FROM student;
 
 
---SELECT
---    id,
---    name,
---    (SELECT AVG(CAST(value AS FLOAT))
---     FROM STRING_SPLIT(marks, ',')
---    ) AS average_marks
---FROM student;
+SELECT
+    id,
+    name,
+    (SELECT AVG(CAST(value AS FLOAT))
+     FROM STRING_SPLIT(marks, ',')
+    ) AS average_marks
+FROM student;
+
+
+
+create table products(
+product_ID int identity primary key,
+productName varchar(20),
+category varchar(20)
+);
+
+
+create table sales(
+saleID int identity primary key ,
+product_id int foreign key references products(product_id),
+sale_date date,
+amount int
+);
+
+
+insert into products (productName,category) values 
+('KEYBOARD','ELECTRONICS'),
+('MOUSE','ELECTRONICS'),
+('JUICE','FOOD'),
+('EGG','FOOD'),
+('BOOK','STATIONARY'),
+('PEN','STATIONARY');
+
+insert into sales (product_id,sale_date,amount) values 
+(2,'2024-07-10',2000),
+(2,'2024-02-05',1000),
+(5,'2024-03-11',2400),
+(4,'2024-06-12',1200),
+(3,'2024-07-10',1100),
+(1,'2024-01-11',200),
+(1,'2024-03-12',1400),
+(2,'2024-07-09',1500),
+(6,'2024-03-10',20),
+(2,'2024-07-10',2000),
+(6,'2024-07-10',10);
+
+
+select * from sales;
+select * from products;
+
+select s.*,p.* from sales s 
+
+
+--procedure should accept the start date as input and return the totla sales amount within the spefic category in given range;
+
+
+
+SELECT SUM(s.amount) AS TotalSalesAmount
+FROM sales s
+INNER JOIN products p ON s.product_id = p.product_ID
+WHERE p.category = 'ELECTRONICS'
+      AND s.sale_date >= '2023-09-30';
+
+
+
+CREATE PROCEDURE spGetTotalSalesAmount
+    @StartDate DATE,
+    @Category VARCHAR(20)
+AS
+BEGIN
+    SELECT SUM(s.amount) AS TotalSalesAmount
+    FROM sales s
+    INNER JOIN products p ON s.product_id = p.product_ID
+    WHERE p.category = @Category
+      AND s.sale_date >= @StartDate;
+END;
+
+
+CREATE PROCEDURE spGetTotalSalesAmount1
+    @StartDate DATE,
+	@EndDate DATE,
+    @Category VARCHAR(20),
+	@ans float output
+AS
+BEGIN
+set @ans=(
+    SELECT SUM(s.amount) AS TotalSalesAmount
+    FROM sales s
+    INNER JOIN products p ON s.product_id = p.product_ID
+    WHERE p.category = @Category
+      AND s.sale_date between @StartDate and @EndDate
+	  );
+END;
+
+exec spGetTotalSalesAmount '2023-09-30','ELECTRONICS';
+
+--subquery
+ SELECT SUM(s.amount)
+         FROM sales s
+         WHERE s.product_id IN (SELECT p.product_ID
+                                FROM products p
+                                WHERE p.category = 'ELECTRONICS')
+           AND s.sale_date between '2023-09-30' and '2024-09-30';
+
+--ORDERS(ORDERID,CUSTOMERID,ORDERDATE,ORDERAMOUNT)
+--CUSTOMERSTAS(customerid,ordercount);
+
+
+create table customerstats(
+customerid int primary key identity,
+ordercount int default(0)
+);
+
+create table orders(
+	orderid int identity primary key,
+	customerid int foreign key references customerstats(customerid),
+	orderamount int
+);
+
+-- Insert dummy data into customerstats
+INSERT INTO customerstats (ordercount) VALUES (2);
+INSERT INTO customerstats (ordercount) VALUES (2);
+INSERT INTO customerstats (ordercount) VALUES (1);
+
+-- Insert dummy data into orders
+INSERT INTO orders (customerid, orderamount) VALUES (1, 100);
+INSERT INTO orders (customerid, orderamount) VALUES (1, 150);
+INSERT INTO orders (customerid, orderamount) VALUES (1, 200);
+INSERT INTO orders (customerid, orderamount) VALUES (2, 300);
+INSERT INTO orders (customerid, orderamount) VALUES (2, 250);
+INSERT INTO orders (customerid, orderamount) VALUES (2, 200);
+INSERT INTO orders (customerid, orderamount) VALUES (2, 150);
+INSERT INTO orders (customerid, orderamount) VALUES (2, 100);
+INSERT INTO orders (customerid, orderamount) VALUES (3, 500);
+INSERT INTO orders (customerid, orderamount) VALUES (3, 450);
+
+
+--ORDERS(ORDERID,CUSTOMERID,ORDERDATE,ORDERAMOUNT)
+--CUSTOMERSTAS(customerid,ordercount);
+
+
+UPDATE customerstats
+SET ordercount = (
+    SELECT COUNT(*)
+    FROM ORDERS
+    WHERE ORDERS.CUSTOMERID = customerstats.customerid
+);
+
+select * from customerstats;
+select * from orders;
+
+
+
+select * from customerstats;
+select * from orders;
+
+
+CREATE PROCEDURE spInsertOrderAndUpdateStats
+    @cid INT,
+    @amount DECIMAL(10, 2)
+AS
+BEGIN
+    BEGIN TRY
+        INSERT INTO orders (customerid, orderamount) VALUES (@cid, @amount);
+        UPDATE customerstats
+        SET ordercount = (
+            SELECT COUNT(*)
+            FROM orders
+            WHERE orders.customerid = customerstats.customerid
+        )
+        WHERE customerstats.customerid = @cid;
+    END TRY
+    BEGIN CATCH
+        PRINT 'NOT INSERTING';
+    END CATCH
+END;
+
+select * from customerstats;
+exec spInsertOrderAndUpdateStats 2,100;
+select * from customerstats;
+
+exec spInsertOrderAndUpdateStats 1,300;
+select * from customerstats;
+
+exec spInsertOrderAndUpdateStats 3,150;
+select * from customerstats;
+
+exec spInsertOrderAndUpdateStats 1,120;
+select * from customerstats;
+
+exec spInsertOrderAndUpdateStats 1,110;
+select * from customerstats;
+
+

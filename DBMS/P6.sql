@@ -591,3 +591,5 @@ select * from [backupTable%^^&(!@#$%^&*()];
 
 
 select * into backuptt from MyEmployees e join Departments d on e.DepartmentId=d.DepartmentId;
+
+
