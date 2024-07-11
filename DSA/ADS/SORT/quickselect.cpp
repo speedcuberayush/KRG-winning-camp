@@ -33,7 +33,6 @@ private:
             if (nums[i] < pivot)
                 swap(nums[i], nums[temp++]);
         swap(nums[end], nums[temp]);
-
         return temp;
     }
 };
