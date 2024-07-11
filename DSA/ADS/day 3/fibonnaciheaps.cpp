@@ -153,7 +153,6 @@ public:
 
             z->prev->next = z->next;
             z->next->prev = z->prev;
-
             if (z == z->next)
                 min = NULL;
 
@@ -187,6 +186,15 @@ int main()
     fh.insert(2);
     fh.insert(15);
     fh.insert(6);
+    fh.insert(9);
+    cout << "Minimum: " << fh.getMin() << endl;
+    cout << "Extracting min: " << fh.extractMin() << endl;
+    cout << "New minimum: " << fh.getMin() << endl;
+    fh.insert(3);
+    cout << "Minimum: " << fh.getMin() << endl;
+    cout << "Extracting min: " << fh.extractMin() << endl;
+    cout << "New minimum: " << fh.getMin() << endl;
+    fh.insert(1);
     cout << "Minimum: " << fh.getMin() << endl;
     cout << "Extracting min: " << fh.extractMin() << endl;
     cout << "New minimum: " << fh.getMin() << endl;
