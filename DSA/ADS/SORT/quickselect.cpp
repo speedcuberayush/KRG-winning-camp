@@ -35,4 +35,18 @@ private:
         swap(nums[end], nums[temp]);
         return temp;
     }
+
+    // void solve(vector<int> &arr, int s, int e)
+    // {
+    //     if (s < e)
+    //     {
+    //         int i = s - 1;
+    //         for (int j = s; j < e; j++)
+    //             if (arr[j] < arr[e])
+    //                 swap(arr[++i], arr[j]);
+    //         swap(arr[++i], arr[e]);
+    //         solve(arr, s, i - 1);
+    //         solve(arr, i + 1, e);
+    //     }
+    // }
 };
