@@ -6,11 +6,9 @@ int minCharsToMakePalindrome(const string &A)
 {
     int n = A.length();
     int minChars = 0;
-    for (int i = 0; i < n / 2; ++i)
-    {
+    for (int i = 0; i < n / 2; ++i) 
         if (A.substr(0, i + 1) == A.substr(n - i - 1, i + 1))
             minChars = n - i - 1;
-    }
     return n - 1 - minChars;
 }
 

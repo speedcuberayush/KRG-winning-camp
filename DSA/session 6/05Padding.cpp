@@ -7,10 +7,9 @@ string justifyLine(const vector<string> &words, int L, int length)
 {
     int spacesNeeded = L - length;
     if (words.size() == 1)
-    {
         return words[0] + string(spacesNeeded, ' ');
-    }
     int spacesBetweenWords = spacesNeeded / (words.size() - 1);
+
     int extraSpaces = spacesNeeded % (words.size() - 1);
     string justifiedLine = "";
     for (int i = 0; i < words.size() - 1; ++i)
