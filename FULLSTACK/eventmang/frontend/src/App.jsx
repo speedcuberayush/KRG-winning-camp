@@ -13,6 +13,7 @@ function App() {
           <Route exact path="/" element={<Landing />} />
           <Route path="/authentication" element={<Authentication />} />
           <Route path="/feed" element={<Student />} />
+          <Route path="/auth" element={<Authentication/>} />
         </Routes>
       </BrowserRouter>
     </div>
